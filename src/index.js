@@ -4,66 +4,46 @@ class Sorter {
         this.elements = [];
         this.sortFunction = function compareFunction(a, b) {
             return a - b;
-        }
+        };
     }
 
     add(element) {
-        // your implementation
-
         this.elements.push(element);
-
-
-
-
     }
 
     at(index) {
-        // your implementation
         return this.elements[index];
     }
 
     get length() {
-        // your implementation
         return this.elements.length;
     }
 
     toArray() {
-        // your implementation
         return this.elements;
     }
 
     sort(indices) {
-        // your implementation
-        let that = this;
-        let sortElements = [];
-        console.log('indices', indices);
-        indices.forEach(function (item) {
-            sortElements.push(that.elements[item]);
-        });
-        sortElements.sort(this.sortFunction);
+        indices.sort();
+        let _this = this;
 
-        let counter = parseInt(indices[0]);
-        for (let i = 0; i < sortElements.length; i++) {
-            that.elements[counter] = sortElements[i];
-            counter++
-        }
-
-        indices.forEach(function (item, index) {
-
+        let selectedElements = indices
+            .map(function(el) {
+                return _this.elements[el];
+            });
+        selectedElements = selectedElements.filter(function(el) {
+            return el !== undefined;
         });
 
+        let sortedElements = selectedElements.sort(this.sortFunction);
+
+        indices.map(function(el, index) {
+            _this.elements[el] = sortedElements[index];
+        });
     }
 
     setComparator(compareFunction) {
-        // your implementation
-        if (compareFunction) {
-            this.sortFunction = compareFunction;
-        } else {
-            this.sortFunction = function sortFunction(a, b) {
-                return a - b;
-            };
-        }
-
+        this.sortFunction = compareFunction;
     }
 }
 
